@@ -2,7 +2,7 @@
 
 namespace Webhooks.Repositories;
 
-internal sealed class InMemoryWebhookSubscriptionRepository
+public sealed class InMemoryWebhookSubscriptionRepository
 {
     private readonly List<WebhookSubscription> _subscriptions = [];
 

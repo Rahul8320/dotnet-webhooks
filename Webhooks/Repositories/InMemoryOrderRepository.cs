@@ -2,7 +2,7 @@
 
 namespace Webhooks.Repositories;
 
-internal sealed class InMemoryOrderRepository
+public sealed class InMemoryOrderRepository
 {
     private readonly List<Order> _orders = [];
 

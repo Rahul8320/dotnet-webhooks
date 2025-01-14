@@ -7,8 +7,7 @@ namespace Webhooks.Services;
 public sealed class WebhookDispatcher(
     IHttpClientFactory httpClientFactory, 
     WebhookSubscriptionRepository subscriptionRepository,
-    WebhookDeliveryAttemptRepository deliveryAttemptRepository,
-    Logger<WebhookDispatcher> logger)
+    WebhookDeliveryAttemptRepository deliveryAttemptRepository)
 {
     public async Task DispatchAsync<T>(string eventType, T data)
     {
@@ -45,7 +44,7 @@ public sealed class WebhookDispatcher(
 
                 await deliveryAttemptRepository.Add(attempt);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 var attempt = new WebhookDeliveryAttempt
                 {
@@ -58,8 +57,6 @@ public sealed class WebhookDispatcher(
                 };
 
                 await deliveryAttemptRepository.Add(attempt);
-
-                logger.LogError(ex.Message, ex);
             }
 
         }

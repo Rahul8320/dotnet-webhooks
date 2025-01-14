@@ -13,10 +13,18 @@ public class WebhookSubscriptionController(
     [HttpPost]
     public async Task<IResult> CreateSubscription([FromBody] CreateWebhookRequest request)
     {
-        var subcription = new WebhookSubscription(Guid.NewGuid(), request.EventType, request.WebhookUrl, DateTime.UtcNow);
+        var subscription = new WebhookSubscription(Guid.NewGuid(), request.EventType, request.WebhookUrl, DateTime.UtcNow);
 
-        await subscriptionRepository.Add(subcription);
+        await subscriptionRepository.Add(subscription);
 
-        return Results.Ok(subcription);
+        return Results.Ok(subscription);
+    }
+
+    [HttpGet]
+    public async Task<IResult> GetAllSubscription()
+    {
+        var subscriptions = await subscriptionRepository.GetAll();
+
+        return Results.Ok(subscriptions);
     }
 }

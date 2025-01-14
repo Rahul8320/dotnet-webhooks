@@ -1,6 +1,6 @@
 @Webhooks_HostAddress = http://localhost:5166/api
 
-### Create subscription
+### Create Subscription
 POST {{Webhooks_HostAddress}}/webhooks/subscriptions
 Content-Type: application/json
 
@@ -8,6 +8,9 @@ Content-Type: application/json
   "eventType": "order.created",
   "webhookUrl": "https://webhook.site/80f9855c-f819-4977-82b6-b837b5e3e84f"
 }
+
+### Get All Subscriptions
+GET {{Webhooks_HostAddress}}/webhooks/subscriptions
 
 ### Create Order
 POST {{Webhooks_HostAddress}}/orders

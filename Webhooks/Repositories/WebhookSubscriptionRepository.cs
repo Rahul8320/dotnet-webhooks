@@ -22,4 +22,11 @@ public sealed class WebhookSubscriptionRepository(WebhooksDbContext dbContext)
 
         return events.AsReadOnly();
     }
+
+    public async Task<IReadOnlyList<WebhookSubscription>> GetAll()
+    {
+        var subscriptions = await dbContext.WebhookSubscriptions.AsNoTracking().ToListAsync();
+
+        return subscriptions.AsReadOnly();
+    }
 }

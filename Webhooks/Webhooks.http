@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "eventType": "order.created",
-  "webhookUrl": "https://webhook.site/09e2a222-664a-4be5-ac55-ce897f5ef880"
+  "webhookUrl": "https://webhook.site/80f9855c-f819-4977-82b6-b837b5e3e84f"
 }
 
 ### Create Order

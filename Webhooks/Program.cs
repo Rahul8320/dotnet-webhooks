@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Webhooks.Data;
 using Webhooks.Repositories;
 using Webhooks.Services;
 
@@ -8,6 +10,9 @@ builder.Services.AddSingleton<InMemoryOrderRepository>();
 builder.Services.AddSingleton<InMemoryWebhookSubscriptionRepository>();
 
 builder.Services.AddHttpClient<WebhookDispatcher>();
+
+builder.Services.AddDbContext<WebhooksDbContext>(option => 
+    option.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

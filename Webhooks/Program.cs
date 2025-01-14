@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Webhooks.Data;
+using Webhooks.Extensions;
 using Webhooks.Repositories;
 using Webhooks.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<OrderRepository>();
-builder.Services.AddSingleton<WebhookSubscriptionRepository>();
-builder.Services.AddSingleton<WebhookDeliveryAttemptRepository>();
+builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddScoped<WebhookSubscriptionRepository>();
+builder.Services.AddScoped<WebhookDeliveryAttemptRepository>();
 
 builder.Services.AddHttpClient<WebhookDispatcher>();
 
@@ -25,6 +26,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    await app.ApplyMigrationsAsync();
 }
 
 app.UseHttpsRedirection();

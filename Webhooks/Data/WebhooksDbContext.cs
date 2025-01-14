@@ -3,7 +3,7 @@ using Webhooks.Models;
 
 namespace Webhooks.Data;
 
-internal sealed class WebhooksDbContext(DbContextOptions<WebhooksDbContext> options): DbContext(options)
+public sealed class WebhooksDbContext(DbContextOptions<WebhooksDbContext> options): DbContext(options)
 {
     public DbSet<Order> Orders { get; set; }
     public DbSet<WebhookSubscription> WebhookSubscriptions { get; set; }

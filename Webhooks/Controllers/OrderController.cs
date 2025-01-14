@@ -8,7 +8,7 @@ namespace Webhooks.Controllers;
 [Route("api/orders")]
 [ApiController]
 public class OrderController(
-    InMemoryOrderRepository orderRepository,
+    OrderRepository orderRepository,
     WebhookDispatcher webhookDispatcher) : ControllerBase
 {
     [HttpPost]
@@ -16,7 +16,7 @@ public class OrderController(
     {
         var order = new Order(Guid.NewGuid(), request.CustomerName, request.Amount, DateTime.UtcNow);
 
-        orderRepository.Add(order);
+        await orderRepository.Add(order);
 
         await webhookDispatcher.DispatchAsync("order.created", order);
 
@@ -24,9 +24,9 @@ public class OrderController(
     }
 
     [HttpGet]
-    public IResult GetAllOrders()
+    public async Task<IResult> GetAllOrders()
     {
-        var orders = orderRepository.GetAll();
+        var orders = await orderRepository.GetAll();
 
         return Results.Ok(orders);
     }

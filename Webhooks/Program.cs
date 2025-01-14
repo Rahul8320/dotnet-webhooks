@@ -6,8 +6,8 @@ using Webhooks.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<InMemoryOrderRepository>();
-builder.Services.AddSingleton<InMemoryWebhookSubscriptionRepository>();
+builder.Services.AddSingleton<OrderRepository>();
+builder.Services.AddSingleton<WebhookSubscriptionRepository>();
 
 builder.Services.AddHttpClient<WebhookDispatcher>();
 

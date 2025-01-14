@@ -4,11 +4,11 @@ namespace Webhooks.Services;
 
 public sealed class WebhookDispatcher(
     HttpClient httpClient, 
-    InMemoryWebhookSubscriptionRepository subscriptionRepository)
+    WebhookSubscriptionRepository subscriptionRepository)
 {
     public async Task DispatchAsync(string eventType, object payload)
     {
-        var subscriptions = subscriptionRepository.GetByEventType(eventType);
+        var subscriptions = await subscriptionRepository.GetByEventType(eventType);
 
         foreach (var subscription in subscriptions)
         {

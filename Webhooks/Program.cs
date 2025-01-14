@@ -7,7 +7,7 @@ using Webhooks.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddHttpClient<WebhookDispatcher>();
+builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<WebhooksDbContext>(option => 
     option.UseSqlite(builder.Configuration.GetConnectionString("Default")));
@@ -15,6 +15,8 @@ builder.Services.AddDbContext<WebhooksDbContext>(option =>
 builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<WebhookSubscriptionRepository>();
 builder.Services.AddScoped<WebhookDeliveryAttemptRepository>();
+
+builder.Services.AddScoped<WebhookDispatcher>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

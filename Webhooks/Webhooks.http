@@ -20,3 +20,6 @@ Content-Type: application/json
   "customerName": "Demo User",
   "amount": "123.45"
 }
+
+### Get All Orders
+GET {{Webhooks_HostAddress}}/orders

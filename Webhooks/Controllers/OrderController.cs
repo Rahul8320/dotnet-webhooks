@@ -7,7 +7,7 @@ namespace Webhooks.Controllers;
 
 [Route("api/orders")]
 [ApiController]
-public class OrderController(
+public sealed class OrderController(
     OrderRepository orderRepository,
     WebhookDispatcher webhookDispatcher) : ControllerBase
 {

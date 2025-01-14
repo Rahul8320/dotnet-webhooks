@@ -6,7 +6,7 @@ namespace Webhooks.Controllers;
 
 [Route("api/webhooks/subscriptions")]
 [ApiController]
-public class WebhookSubscriptionController(
+public sealed class WebhookSubscriptionController(
     WebhookSubscriptionRepository subscriptionRepository
     ) : ControllerBase
 {

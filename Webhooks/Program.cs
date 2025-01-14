@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<OrderRepository>();
 builder.Services.AddSingleton<WebhookSubscriptionRepository>();
+builder.Services.AddSingleton<WebhookDeliveryAttemptRepository>();
 
 builder.Services.AddHttpClient<WebhookDispatcher>();
 

@@ -7,6 +7,7 @@ public sealed class WebhooksDbContext(DbContextOptions<WebhooksDbContext> option
 {
     public DbSet<Order> Orders { get; set; }
     public DbSet<WebhookSubscription> WebhookSubscriptions { get; set; }
+    public DbSet<WebhookDeliveryAttempt> WebhookDeliveryAttempts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -20,6 +21,16 @@ public sealed class WebhooksDbContext(DbContextOptions<WebhooksDbContext> option
         {
             builder.ToTable("subscriptions", "webhooks");
             builder.HasKey(w => w.Id);
+        });
+
+        modelBuilder.Entity<WebhookDeliveryAttempt>(builder =>
+        {
+            builder.ToTable("delivery_attempts", "webhooks");
+            builder.HasKey(w => w.Id);
+
+            builder.HasOne<WebhookSubscription>()
+                .WithMany()
+                .HasForeignKey(w => w.WebhookSubscriptionId);
         });
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Channels;
 using Webhooks.Data;
 using Webhooks.Extensions;
 using Webhooks.Repositories;
@@ -17,6 +18,16 @@ builder.Services.AddScoped<WebhookSubscriptionRepository>();
 builder.Services.AddScoped<WebhookDeliveryAttemptRepository>();
 
 builder.Services.AddScoped<WebhookDispatcher>();
+
+builder.Services.AddHostedService<WebhookProcesser>();
+
+builder.Services.AddSingleton(_ =>
+{
+    return Channel.CreateBounded<WebhookDispatch>(new BoundedChannelOptions(100)
+    {
+        FullMode = BoundedChannelFullMode.Wait
+    });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

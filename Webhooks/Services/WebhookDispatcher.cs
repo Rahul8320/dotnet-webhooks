@@ -1,21 +1,28 @@
 ﻿using System.Text.Json;
+using System.Threading.Channels;
 using Webhooks.Models;
 using Webhooks.Repositories;
 
 namespace Webhooks.Services;
 
 public sealed class WebhookDispatcher(
+    Channel<WebhookDispatch> webhookChannel,
     IHttpClientFactory httpClientFactory, 
     WebhookSubscriptionRepository subscriptionRepository,
     WebhookDeliveryAttemptRepository deliveryAttemptRepository)
 {
-    public async Task DispatchAsync<T>(string eventType, T data)
+    public async Task DispatchAsync<T>(string eventType, T data) where T : notnull
+    { 
+        await webhookChannel.Writer.WriteAsync(new WebhookDispatch(eventType, data));
+    }
+
+    public async Task ProcessAsync<T>(string eventType, T data)
     {
         var subscriptions = await subscriptionRepository.GetByEventType(eventType);
 
-        foreach (var subscription in subscriptions)
+        foreach (WebhookSubscription subscription in subscriptions)
         {
-            using var httpClient = httpClientFactory.CreateClient();
+            using HttpClient httpClient = httpClientFactory.CreateClient();
 
             var payload = new WebhookPayload<T>
             {
